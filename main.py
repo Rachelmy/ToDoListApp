@@ -19,3 +19,8 @@ items = []
 def creat_item(item: Item):
     items.append(item)
     return items
+
+# List the to-do items, with optional limit
+@app.get("/items", response_model = list[Item])
+def list_items(limit: int = 10):
+    return items[0:limit]
