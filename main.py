@@ -12,3 +12,10 @@ class Item(BaseModel):
 @app.get("/")
 def root():
     return {"status": "running", "message": "FastAPI is alive"}
+
+items = []
+#Create a new to-do item and add it to the list
+@app.post("/items")
+def creat_item(item: Item):
+    items.append(item)
+    return items
