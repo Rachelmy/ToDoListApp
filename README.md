@@ -23,3 +23,4 @@ Install dependencies:
 
 ```bash
 pip install fastapi uvicorn
+```
