@@ -19,8 +19,7 @@ is_done = st.checkbox("Completed?", value=False)
 if st.button("Add Task"):
     if text.strip():
         response = requests.post(
-            f"{API_URL}/items",
-            json={"text": text, "is_done": is_done}
+            f"{API_URL}/items", json={"text": text, "is_done": is_done}
         )
         if response.status_code == 200:
             st.success("Task added successfully!")
@@ -42,7 +41,24 @@ response = requests.get(f"{API_URL}/items", params={"limit": limit})
 if response.status_code == 200:
     tasks = response.json()
     for i, task in enumerate(tasks):
-        status = "✅" if task["is_done"] else ""
+        status = "✅" if task["is_done"] else "❌"
         st.write(f"**{i}** - {task['text']} {status}")
 else:
     st.error("Unable to fetch tasks.")
+
+# --- View Task by ID ---
+st.header("🔍 View Task by ID")
+task_id = st.text_input("Enter Task ID", key="view_task_id")
+if st.button("View Task ID"):
+    if task_id.strip():
+        response = requests.get(f"{API_URL}/items/{int(task_id)}")
+        if response.status_code == 200:
+            task = response.json()
+            status = "✅" if task["is_done"] else "❌"
+            st.info(
+                f"Task ID: {int(task_id)}\nDescription: {task['text']}\nCompleted: {status}"
+            )
+        else:
+            st.error("Task not found or error fetching task.")
+    else:
+        st.warning("Please enter a Task ID.")
