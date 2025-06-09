@@ -26,6 +26,7 @@ The frontend is a lightweight web app that lets you:
 
 - View all to-do items
 - Add new items
+- view task by ID
 
 ## ▶️ Running the Frontend
 
